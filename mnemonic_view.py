@@ -39,11 +39,14 @@ def get_ctx_result(result):
 
     ctx_result['data'] = list()
     for curr_item in data:
-        curr_item['answer_contains'] = 'ip'
+        curr_item['answer_contains'] = 'domain'
 
         answer = curr_item.get('answer')
-        if ((answer) and (not phantom.is_ip(answer))):
-            curr_item['answer_contains'] = 'domain'
+        if (answer):
+            if (phantom.is_ip(answer)):
+                curr_item['answer_contains'] = 'ip'
+            elif ('::' in answer):
+                curr_item['answer_contains'] = 'ipv6'
 
         ctx_result['data'].append(curr_item)
 
