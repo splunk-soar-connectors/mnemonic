@@ -1,11 +1,11 @@
 {
     "appid": "b67d3658-70cb-430f-bcf1-142aaca14ace",
     "name": "Mnemonic",
-    "description": "This app integrates with the Mnemonic PassiveDNS API to implement investigative actions",
+    "description": "This app integrates with the Mnemonic Passive DNS API to implement investigative actions",
     "type": "information",
     "product_vendor": "Mnemonic",
     "logo": "mnemonic.png",
-    "product_name": "PassiveDNS",
+    "product_name": "Passive DNS",
     "product_version_regex": ".*",
     "publisher": "Phantom",
     "license": "Copyright (c) Phantom Cyber Corporation, 2017",
