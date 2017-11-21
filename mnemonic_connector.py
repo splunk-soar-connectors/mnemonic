@@ -50,7 +50,10 @@ class MnemonicConnector(BaseConnector):
         if response.status_code == 200:
             return RetVal(phantom.APP_SUCCESS, {})
 
-        return RetVal(action_result.set_status(phantom.APP_ERROR, "Empty response and no information in the header"), None)
+        # process the error returned in the response
+        message = "Response from server. Status Code: {0}. Details: None".format(response.status_code)
+
+        return RetVal(action_result.set_status(phantom.APP_ERROR, message))
 
     def _process_html_response(self, response, action_result):
 
@@ -139,7 +142,8 @@ class MnemonicConnector(BaseConnector):
                             url,
                             data=data,
                             headers=headers,
-                            params=params)
+                            params=params,
+                            timeout=20)
         except Exception as e:
             return RetVal(action_result.set_status( phantom.APP_ERROR, "Error Connecting to server. Details: {0}".format(str(e))), resp_json)
 
@@ -158,7 +162,7 @@ class MnemonicConnector(BaseConnector):
         if (phantom.is_fail(ret_val)):
             # the call to the 3rd party device or service failed, action result should contain all the error details
             # so just return from here
-            self.save_progress("Test Connectivity Failed. Error: {0}".format(action_result.get_message()))
+            self.save_progress("Test Connectivity Failed")
             return action_result.get_status()
 
         self.save_progress("Test Connectivity Passed")
@@ -287,7 +291,6 @@ class MnemonicConnector(BaseConnector):
 
 if __name__ == '__main__':
 
-    import sys
     import pudb
     import argparse
 
@@ -333,11 +336,7 @@ if __name__ == '__main__':
             print ("Unable to get session id from the platfrom. Error: " + str(e))
             exit(1)
 
-    if (len(sys.argv) < 2):
-        print "No test json specified as input"
-        exit(0)
-
-    with open(sys.argv[1]) as f:
+    with open(args.input_test_json) as f:
         in_json = f.read()
         in_json = json.loads(in_json)
         print(json.dumps(in_json, indent=4))

@@ -111,6 +111,8 @@ of Phantom Cyber Corporation.
     {{ result.param.range }}
   </td>
 </tr>
+
+{% if result.summary %}
 <tr>
   <td><b>Total Entries</b></td>
   <td>
@@ -123,6 +125,26 @@ of Phantom Cyber Corporation.
     {{ result.summary.items_returned }}
   </td>
 </tr>
+{% endif %}
+
+{% if result.status is False %}
+<tr>
+  <td><b>Status</b></td>
+  <td>
+    Failed
+  </td>
+</tr>
+{% endif %}
+
+{% if result.message %}
+<tr>
+  <td><b>Message</b></td>
+  <td>
+    {{ result.message }}
+  </td>
+</tr>
+{% endif %}
+
 {% endif %}
 </table>
 
@@ -148,8 +170,6 @@ of Phantom Cyber Corporation.
         {% endfor %}
       </table>
       <br>
-      {% else %}
-      <p> No results found</p>
       {% endif %}
 
 

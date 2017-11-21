@@ -104,6 +104,10 @@
                     ]
                 },
                 {
+                    "data_path": "action_result.data.*.customer",
+                    "data_type": "string"
+                },
+                {
                     "data_path": "action_result.data.*.tlp",
                     "data_type": "string",
                     "example_values": [
