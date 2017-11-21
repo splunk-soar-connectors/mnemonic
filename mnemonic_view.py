@@ -24,6 +24,8 @@ def get_ctx_result(result):
     data = result.get_data()
 
     ctx_result['param'] = param
+    ctx_result['status'] = result.get_status()
+    ctx_result['message'] = result.get_message()
 
     domain = param['domain']
     param['domain_contains'] = 'domain'
