@@ -50,25 +50,22 @@ of Phantom Cyber Corporation.
   border: 1px solid rgb(234, 234, 234);
 }
 
-.mnemonic-display-domain .wf-table-horizontal {
-  width: initial;
-  border: 1px solid rgb(234, 234, 234);
-  font-size: 12px;
+.mnemonic-display-domain .endpoints_table {
+    width: 100%;
+    overflow-x: auto;
 }
 
-.mnemonic-display-domain .wf-table-horizontal th {
-  text-align: center;
-  border: 1px solid rgb(234, 234, 234);
-  text-transform: uppercase;
-  font-weight: normal;
-  color: rgb(108, 129, 139);
-  padding: 5px;
+.mnemonic-display-domain .dataTable th.widget-th {
+    border-top: 1px solid #eee !important;
 }
 
-.mnemonic-display-domain .wf-table-horizontal td {
-  border: 1px solid rgb(234, 234, 234);
-  padding: 5px;
-  padding-left: 4px;
+.mnemonic-display-domain .dataTable td.widget-td a{
+    font-size: 12px;
+    color: #000;
+}
+
+.mnemonic-display-domain .dataTable .glyphicon.glyphicon-dot:before {
+    content: "\25cf"; font-size: 10px;
 }
 
 .mnemonic-display-domain .wf-h3-style {
@@ -152,24 +149,39 @@ of Phantom Cyber Corporation.
 
     <!-- IPs -->
       {% if result.data %}
-      <table class="wf-table-horizontal">
-        <tr><th>Query</th><th>Answer</th><th>First Seen</th><th>Last Seen</th></tr>
-        {% for curr_data in result.data %}
-        <tr>
-          <td><a href="javascript:;" onclick="context_menu(this, [{'contains': ['domain'], 'value': '{{ curr_data.query }}' }], 0, {{ container.id }}, null, false);">
-              {{ curr_data.query }}
-              &nbsp;<span class="fa fa-caret-down" style="font-size: smaller;"></span>
-          </a></td>
-          <td><a href="javascript:;" onclick="context_menu(this, [{'contains': ['{{ curr_data.answer_contains }}'], 'value': '{{ curr_data.answer }}' }], 0, {{ container.id }}, null, false);">
-              {{ curr_data.answer }}
-              &nbsp;<span class="fa fa-caret-down" style="font-size: smaller;"></span>
-          </a></td>
-          <td>{{ curr_data.firstSeenTimestampString }}</td>
-          <td>{{ curr_data.lastSeenTimestampString }}</td>
-        </tr>
-        {% endfor %}
-      </table>
+
+        <div class="endpoints_table">
+          <table class="phantom-table dataTable">
+            <thead>
+              <tr>
+                <th class="widget-th">Query</th>
+                <th class="widget-th">Answer</th>
+                <th class="widget-th">First Seen</th>
+                <th class="widget-th">Last Seen</th>
+              </tr>
+            </thead>
+            {% for curr_data in result.data %}
+            <tr>
+              <td class="widget-td">
+                <a href="javascript:;" onclick="context_menu(this, [{'contains': ['domain'], 'value': '{{ curr_data.query }}' }], 0, {{ container.id }}, null, false);">
+                  {{ curr_data.query }}
+                  &nbsp;<span class="fa fa-caret-down" style="font-size: smaller;"></span>
+                </a>
+              </td>
+              <td class="widget-td">
+                <a href="javascript:;" onclick="context_menu(this, [{'contains': ['{{ curr_data.answer_contains }}'], 'value': '{{ curr_data.answer }}' }], 0, {{ container.id }}, null, false);">
+                  {{ curr_data.answer }}
+                  &nbsp;<span class="fa fa-caret-down" style="font-size: smaller;"></span>
+                </a>
+              </td>
+              <td class="widget-td">{{ curr_data.firstSeenTimestampString }}</td>
+              <td class="widget-td">{{ curr_data.lastSeenTimestampString }}</td>
+            </tr>
+            {% endfor %}
+          </table>
+        </div>
       <br>
+
       {% endif %}
 
 
@@ -178,6 +190,26 @@ of Phantom Cyber Corporation.
 {% endfor %} <!-- loop for each result end -->
 </div> <!-- Main Div -->
 
-{% endblock %} <!-- Main Start Block -->
+<script>
+$.extend(true, $.fn.dataTable.defaults, {
+    "searching": true,
+    "bLengthChange": false,
+    "language": {
+      "paginate": {
+        "previous": "<i class='fa fa-angle-left fa-lg'></i>",
+        "next": "<i class='fa fa-angle-right fa-lg'></i>"
+      },
+      "emptyTable": "No data available"
+    },
+    "dom": '<"top">rt<"bottom"p><"clear">',
+    drawCallback: function(settings) {
+      var pagination = $(this).closest('.dataTables_wrapper').find('.dataTables_paginate');
+      pagination.toggle(this.api().page.info().pages > 1);
+    }
+  });
+  $('.dataTable').DataTable();
 
+</script>
+
+{% endblock %} <!-- Main Start Block -->
 
