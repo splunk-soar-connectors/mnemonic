@@ -1,0 +1,235 @@
+{
+    "appid": "b67d3658-70cb-430f-bcf1-142aaca14ace",
+    "name": "Mnemonic",
+    "description": "This app integrates with the Mnemonic Passive DNS API to implement investigative actions",
+    "type": "information",
+    "product_vendor": "Mnemonic",
+    "logo": "mnemonic.png",
+    "product_name": "Passive DNS",
+    "product_version_regex": ".*",
+    "publisher": "Phantom",
+    "license": "Copyright (c) Phantom Cyber Corporation, 2017",
+    "app_version": "1.0.2",
+    "utctime_updated": "2017-11-21T23:40:30.000000Z",
+    "package_name": "phantom_mnemonic",
+    "main_module": "mnemonic_connector.pyc",
+    "min_phantom_version": "3.0.251",
+    "app_wizard_version": "1.0.0",
+    "configuration": {},
+    "actions": [
+        {
+            "action": "test connectivity",
+            "identifier": "test_connectivity",
+            "description": "Validate the asset configuration for connectivity using supplied configuration",
+            "verbose": "",
+            "type": "test",
+            "read_only": true,
+            "parameters": {},
+            "output": [],
+            "versions": "EQ(*)"
+        },
+        {
+            "action": "lookup domain",
+            "identifier": "lookup_domain",
+            "description": "Check for the presence of a domain in a threat intelligence feed",
+            "verbose": "",
+            "type": "investigate",
+            "read_only": true,
+            "parameters": {
+                "domain": {
+                    "description": "Domain to lookup",
+                    "data_type": "string",
+                    "required": true,
+                    "primary": true,
+                    "contains": [
+                        "domain",
+                        "url"
+                    ],
+                    "value_list": [],
+                    "default": "",
+                    "order": 0
+                },
+                "range": {
+                    "description": "Range (min_offset-max_offset), default is 0-100",
+                    "data_type": "string",
+                    "required": false,
+                    "primary": false,
+                    "default": "0-100",
+                    "order": 1
+                }
+            },
+            "output": [
+                {
+                    "data_path": "action_result.parameter.domain",
+                    "data_type": "string",
+                    "contains": [
+                        "domain",
+                        "url"
+                    ],
+                    "example_values": [
+                        "https://phantom.us",
+                        "phantom.us"
+                    ]
+                },
+                {
+                    "data_path": "action_result.parameter.range",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.status",
+                    "data_type": "string",
+                    "example_values": [
+                        "success"
+                    ]
+                },
+                {
+                    "data_path": "action_result.message",
+                    "data_type": "string",
+                    "example_values": [
+                        "Items returned: 3, Total items: 3"
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "summary.total_objects_successful",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.customer",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.tlp",
+                    "data_type": "string",
+                    "example_values": [
+                        "white"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.lastSeenTimestamp",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1509969898297
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.rrtype",
+                    "data_type": "string",
+                    "example_values": [
+                        "a"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.rrclass",
+                    "data_type": "string",
+                    "example_values": [
+                        "in"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.times",
+                    "data_type": "numeric",
+                    "example_values": [
+                        145
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.createdTimestamp",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.answer",
+                    "data_type": "string",
+                    "example_values": [
+                        "52.91.186.198"
+                    ],
+                    "contains": [
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.firstSeenTimestamp",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1487193402522
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.maxTtl",
+                    "data_type": "numeric",
+                    "example_values": [
+                        600
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.lastUpdatedTimestamp",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.query",
+                    "data_type": "string",
+                    "example_values": [
+                        "phantom.us"
+                    ],
+                    "column_name": "Query",
+                    "column_order": 0
+                },
+                {
+                    "data_path": "action_result.data.*.firstSeenTimestampString",
+                    "data_type": "string",
+                    "example_values": [
+                        "2017-02-15 13:16:42 PST"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.minTtl",
+                    "data_type": "numeric",
+                    "example_values": [
+                        600
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.lastSeenTimestampString",
+                    "data_type": "string",
+                    "example_values": [
+                        "2017-11-06 04:04:58 PST"
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.total_items",
+                    "data_type": "numeric",
+                    "example_values": [
+                        3
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.items_returned",
+                    "data_type": "numeric",
+                    "example_values": [
+                        3
+                    ]
+                }
+            ],
+            "render": {
+                "type": "custom",
+                "view": "mnemonic_view.display_lookup_domain"
+            },
+            "versions": "EQ(*)"
+        }
+    ]
+}
