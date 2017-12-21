@@ -4,14 +4,13 @@
     "description": "This app integrates with the Mnemonic Passive DNS API to implement investigative actions",
     "type": "information",
     "product_vendor": "Mnemonic",
-    "logo": "logo_mnemonic.svg",
-    "logo_dark": "logo_mnemonic_dark.svg",
+    "logo": "mnemonic.png",
     "product_name": "Passive DNS",
     "product_version_regex": ".*",
     "publisher": "Phantom",
     "license": "Copyright (c) Phantom Cyber Corporation, 2017",
-    "app_version": "1.0.4",
-    "utctime_updated": "2017-12-21T03:23:55.000000Z",
+    "app_version": "1.0.2",
+    "utctime_updated": "2017-11-21T23:40:30.000000Z",
     "package_name": "phantom_mnemonic",
     "main_module": "mnemonic_connector.pyc",
     "min_phantom_version": "3.0.251",
@@ -61,13 +60,6 @@
             },
             "output": [
                 {
-                    "data_path": "action_result.status",
-                    "data_type": "string",
-                    "example_values": [
-                        "success"
-                    ]
-                },
-                {
                     "data_path": "action_result.parameter.domain",
                     "data_type": "string",
                     "contains": [
@@ -84,124 +76,10 @@
                     "data_type": "string"
                 },
                 {
-                    "data_path": "action_result.data.*.answer",
+                    "data_path": "action_result.status",
                     "data_type": "string",
                     "example_values": [
-                        "52.91.186.198"
-                    ],
-                    "contains": [
-                        "ip"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.createdTimestamp",
-                    "data_type": "numeric",
-                    "example_values": [
-                        0
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.customer",
-                    "data_type": "string"
-                },
-                {
-                    "data_path": "action_result.data.*.firstSeenTimestamp",
-                    "data_type": "numeric",
-                    "example_values": [
-                        1487193402522
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.firstSeenTimestampString",
-                    "data_type": "string",
-                    "example_values": [
-                        "2017-02-15 13:16:42 PST"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.lastSeenTimestamp",
-                    "data_type": "numeric",
-                    "example_values": [
-                        1509969898297
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.lastSeenTimestampString",
-                    "data_type": "string",
-                    "example_values": [
-                        "2017-11-06 04:04:58 PST"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.lastUpdatedTimestamp",
-                    "data_type": "numeric",
-                    "example_values": [
-                        0
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.maxTtl",
-                    "data_type": "numeric",
-                    "example_values": [
-                        600
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.minTtl",
-                    "data_type": "numeric",
-                    "example_values": [
-                        600
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.query",
-                    "data_type": "string",
-                    "example_values": [
-                        "phantom.us"
-                    ],
-                    "column_name": "Query",
-                    "column_order": 0
-                },
-                {
-                    "data_path": "action_result.data.*.rrclass",
-                    "data_type": "string",
-                    "example_values": [
-                        "in"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.rrtype",
-                    "data_type": "string",
-                    "example_values": [
-                        "a"
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.times",
-                    "data_type": "numeric",
-                    "example_values": [
-                        145
-                    ]
-                },
-                {
-                    "data_path": "action_result.data.*.tlp",
-                    "data_type": "string",
-                    "example_values": [
-                        "white"
-                    ]
-                },
-                {
-                    "data_path": "action_result.summary.items_returned",
-                    "data_type": "numeric",
-                    "example_values": [
-                        3
-                    ]
-                },
-                {
-                    "data_path": "action_result.summary.total_items",
-                    "data_type": "numeric",
-                    "example_values": [
-                        3
+                        "success"
                     ]
                 },
                 {
@@ -223,6 +101,127 @@
                     "data_type": "numeric",
                     "example_values": [
                         1
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.customer",
+                    "data_type": "string"
+                },
+                {
+                    "data_path": "action_result.data.*.tlp",
+                    "data_type": "string",
+                    "example_values": [
+                        "white"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.lastSeenTimestamp",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1509969898297
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.rrtype",
+                    "data_type": "string",
+                    "example_values": [
+                        "a"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.rrclass",
+                    "data_type": "string",
+                    "example_values": [
+                        "in"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.times",
+                    "data_type": "numeric",
+                    "example_values": [
+                        145
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.createdTimestamp",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.answer",
+                    "data_type": "string",
+                    "example_values": [
+                        "52.91.186.198"
+                    ],
+                    "contains": [
+                        "ip"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.firstSeenTimestamp",
+                    "data_type": "numeric",
+                    "example_values": [
+                        1487193402522
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.maxTtl",
+                    "data_type": "numeric",
+                    "example_values": [
+                        600
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.lastUpdatedTimestamp",
+                    "data_type": "numeric",
+                    "example_values": [
+                        0
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.query",
+                    "data_type": "string",
+                    "example_values": [
+                        "phantom.us"
+                    ],
+                    "column_name": "Query",
+                    "column_order": 0
+                },
+                {
+                    "data_path": "action_result.data.*.firstSeenTimestampString",
+                    "data_type": "string",
+                    "example_values": [
+                        "2017-02-15 13:16:42 PST"
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.minTtl",
+                    "data_type": "numeric",
+                    "example_values": [
+                        600
+                    ]
+                },
+                {
+                    "data_path": "action_result.data.*.lastSeenTimestampString",
+                    "data_type": "string",
+                    "example_values": [
+                        "2017-11-06 04:04:58 PST"
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.total_items",
+                    "data_type": "numeric",
+                    "example_values": [
+                        3
+                    ]
+                },
+                {
+                    "data_path": "action_result.summary.items_returned",
+                    "data_type": "numeric",
+                    "example_values": [
+                        3
                     ]
                 }
             ],
