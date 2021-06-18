@@ -1,14 +1,10 @@
 # --
 # File: mnemonic_connector.py
 #
-# Copyright (c) Phantom Cyber Corporation, 2017
+# Copyright (c) 2017-2021 Splunk Inc.
 #
-# This unpublished material is proprietary to Phantom Cyber.
-# All rights reserved. The methods and
-# techniques described herein are considered trade secrets
-# and/or confidential. Reproduction or distribution, in whole
-# or in part, is forbidden except by express written permission
-# of Phantom Cyber Corporation.
+# SPLUNK CONFIDENTIAL - Use or disclosure of this material in whole or in part
+# without a valid written license from Splunk Inc. is PROHIBITED.
 #
 # --
 
@@ -17,7 +13,7 @@ import phantom.app as phantom
 from phantom.base_connector import BaseConnector
 from phantom.action_result import ActionResult
 
-import mnemonic_consts as const
+from mnemonic_consts import *
 import requests
 import json
 import time
@@ -44,6 +40,8 @@ class MnemonicConnector(BaseConnector):
         self._state = None
 
         self._base_url = None
+
+        self._domain = None
 
     def _process_empty_reponse(self, response, action_result):
 
@@ -154,18 +152,18 @@ class MnemonicConnector(BaseConnector):
         # Add an action result object to self (BaseConnector) to represent the action for this param
         action_result = self.add_action_result(ActionResult(dict(param)))
 
-        self.save_progress("Querying a domain to test connectivity to {0} ".format(self._base_url))
+        self.save_progress("Querying a domain to test connectivity to {0}/{1} ".format(self._base_url, self._domain))
 
         # make rest call
-        ret_val, response = self._make_rest_call('/phantom.us', action_result, params={'limit': 1, 'offset': 0})
+        ret_val, response = self._make_rest_call('/{0}'.format(self._domain), action_result, params={'limit': 1, 'offset': 0})
 
-        if (phantom.is_fail(ret_val)):
+        if phantom.is_fail(ret_val):
             # the call to the 3rd party device or service failed, action result should contain all the error details
             # so just return from here
-            self.save_progress("Test Connectivity Failed")
+            self.save_progress(MNEMONIC_ERR_TEST_CONNECTIVITY)
             return action_result.get_status()
 
-        self.save_progress("Test Connectivity Passed")
+        self.save_progress(MNEMONIC_SUCCESS_TEST_CONNECTIVITY)
         return action_result.set_status(phantom.APP_SUCCESS)
 
     def _parse_range(self, min_max, action_result):
@@ -173,20 +171,20 @@ class MnemonicConnector(BaseConnector):
         try:
             mini, maxi = (int(x) for x in min_max.split('-'))
         except:
-            return RetVal3(action_result.set_status(phantom.APP_ERROR, "Unable to parse the range. Please specify the range as min_offset-max_offset"))
+            return RetVal3(action_result.set_status(phantom.APP_ERROR, MNEMONIC_ERR_PARSE_RANGE))
 
         if (mini < 0) or (maxi < 0):
-            return RetVal3(action_result.set_status(phantom.APP_ERROR, "Invalid min or max offset value specified in range", ))
+            return RetVal3(action_result.set_status(phantom.APP_ERROR, MNEMONIC_ERR_INVALID_OFFSET_RANGE, ))
 
-        if (mini > maxi):
-            return RetVal3(action_result.set_status(phantom.APP_ERROR, "Invalid range value, min_offset should be less than max_offset"))
+        if mini > maxi:
+            return RetVal3(action_result.set_status(phantom.APP_ERROR, MNEMONIC_ERR_INVALID_RANGE))
 
         limit = maxi - mini
 
-        if (limit == 0):
+        if limit == 0:
             limit = 1
 
-        return (phantom.APP_SUCCESS, mini, limit)
+        return phantom.APP_SUCCESS, mini, limit
 
     def _handle_lookup_domain(self, param):
 
@@ -197,14 +195,14 @@ class MnemonicConnector(BaseConnector):
 
         domain = param['domain']
 
-        min_max = param.get('range', const.MNEMONIC_DEFAULT_RANGE)
+        min_max = param.get('range', MNEMONIC_DEFAULT_RANGE)
 
         ret_val, offset, limit = self._parse_range(min_max, action_result)
 
-        if (phantom.is_fail(ret_val)):
+        if phantom.is_fail(ret_val):
             return action_result.get_status()
 
-        if (phantom.is_url(domain)):
+        if phantom.is_url(domain):
             domain = phantom.get_host_from_url(domain)
 
         endpoint = '/{0}'.format(domain)
@@ -214,7 +212,7 @@ class MnemonicConnector(BaseConnector):
         # make rest call
         ret_val, response = self._make_rest_call(endpoint, action_result, params=params)
 
-        if (phantom.is_fail(ret_val)):
+        if phantom.is_fail(ret_val):
             # the call to the 3rd party device or service failed, action result should contain all the error details
             # so just return from here
             return action_result.get_status()
@@ -227,10 +225,10 @@ class MnemonicConnector(BaseConnector):
         except:
             message = ''
 
-        if (data is None):
+        if data is None:
             return action_result.set_status(phantom.APP_SUCCESS, "No data returned. {}".format(message if message else ''))
 
-        if (type(data) != list):
+        if type(data) != list:
             data = [data]
 
         for curr_item in data:
@@ -274,11 +272,15 @@ class MnemonicConnector(BaseConnector):
 
     def initialize(self):
 
+        config = self.get_config()
+
         # Load the state in initialize, use it to store data
         # that needs to be accessed across actions
         self._state = self.load_state()
 
-        self._base_url = const.MNEMONIC_BASE_URL
+        self._base_url = MNEMONIC_BASE_URL
+
+        self._domain = config.get('domain', 'phantom.us')
 
         return phantom.APP_SUCCESS
 
@@ -308,15 +310,15 @@ if __name__ == '__main__':
     username = args.username
     password = args.password
 
-    if (username is not None and password is None):
+    if username is not None and password is None:
 
         # User specified a username but not a password, so ask
         import getpass
         password = getpass.getpass("Password: ")
 
-    if (username and password):
+    if username and password:
         try:
-            print ("Accessing the Login page")
+            print("Accessing the Login page")
             r = requests.get("https://127.0.0.1/login", verify=False)
             csrftoken = r.cookies['csrftoken']
 
@@ -329,11 +331,11 @@ if __name__ == '__main__':
             headers['Cookie'] = 'csrftoken=' + csrftoken
             headers['Referer'] = 'https://127.0.0.1/login'
 
-            print ("Logging into Platform to get the session id")
+            print("Logging into Platform to get the session id")
             r2 = requests.post("https://127.0.0.1/login", verify=False, data=data, headers=headers)
             session_id = r2.cookies['sessionid']
         except Exception as e:
-            print ("Unable to get session id from the platfrom. Error: " + str(e))
+            print("Unable to get session id from the platfrom. Error: " + str(e))
             exit(1)
 
     with open(args.input_test_json) as f:
@@ -344,10 +346,10 @@ if __name__ == '__main__':
         connector = MnemonicConnector()
         connector.print_progress_message = True
 
-        if (session_id is not None):
+        if session_id is not None:
             in_json['user_session_token'] = session_id
 
         ret_val = connector._handle_action(json.dumps(in_json), None)
-        print (json.dumps(json.loads(ret_val), indent=4))
+        print(json.dumps(json.loads(ret_val), indent=4))
 
     exit(0)
