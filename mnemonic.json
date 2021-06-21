@@ -22,7 +22,7 @@
     ],
     "configuration": {
         "domain": {
-            "description": "Domain to be used in test connectivity",
+            "description": "Domain to check connectivity (Default: phantom.us)",
             "data_type": "string",
             "default": "phantom.us",
             "order": 0
