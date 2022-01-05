@@ -15,15 +15,16 @@
 #
 #
 # Phantom App imports
-import phantom.app as phantom
-from phantom.base_connector import BaseConnector
-from phantom.action_result import ActionResult
-
-from mnemonic_consts import *
-import requests
 import json
 import time
+
+import phantom.app as phantom
+import requests
 from bs4 import BeautifulSoup
+from phantom.action_result import ActionResult
+from phantom.base_connector import BaseConnector
+
+from mnemonic_consts import *
 
 
 class RetVal(tuple):
@@ -239,11 +240,13 @@ class MnemonicConnector(BaseConnector):
 
         for curr_item in data:
             try:
-                curr_item['lastSeenTimestampString'] = time.strftime('%Y-%m-%d %H:%M:%S %Z', time.localtime(curr_item['lastSeenTimestamp'] / 1000))
+                curr_item['lastSeenTimestampString'] = time.strftime('%Y-%m-%d %H:%M:%S %Z',
+                    time.localtime(curr_item['lastSeenTimestamp'] / 1000))
             except:
                 pass
             try:
-                curr_item['firstSeenTimestampString'] = time.strftime('%Y-%m-%d %H:%M:%S %Z', time.localtime(curr_item['firstSeenTimestamp'] / 1000))
+                curr_item['firstSeenTimestampString'] = time.strftime('%Y-%m-%d %H:%M:%S %Z',
+                    time.localtime(curr_item['firstSeenTimestamp'] / 1000))
             except:
                 pass
 
@@ -299,8 +302,9 @@ class MnemonicConnector(BaseConnector):
 
 if __name__ == '__main__':
 
-    import pudb
     import argparse
+
+    import pudb
 
     pudb.set_trace()
 
