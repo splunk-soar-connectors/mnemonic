@@ -14,6 +14,7 @@
 # and limitations under the License.
 MNEMONIC_BASE_URL = "https://api.mnemonic.no/pdns/v3"
 MNEMONIC_DEFAULT_RANGE = '0-100'
+DEFAULT_TIMEOUT = 30
 
 MNEMONIC_SUCCESS_TEST_CONNECTIVITY = "Test Connectivity Passed"
 MNEMONIC_ERR_TEST_CONNECTIVITY = "Test Connectivity Failed"
