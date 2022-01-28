@@ -1,23 +1,30 @@
-# --
 # File: mnemonic_connector.py
 #
-# Copyright (c) 2017-2021 Splunk Inc.
+# Copyright (c) 2017-2022 Splunk Inc.
 #
-# SPLUNK CONFIDENTIAL - Use or disclosure of this material in whole or in part
-# without a valid written license from Splunk Inc. is PROHIBITED.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
 #
-# --
-
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software distributed under
+# the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+# either express or implied. See the License for the specific language governing permissions
+# and limitations under the License.
+#
+#
 # Phantom App imports
-import phantom.app as phantom
-from phantom.base_connector import BaseConnector
-from phantom.action_result import ActionResult
-
-from mnemonic_consts import *
-import requests
 import json
 import time
+
+import phantom.app as phantom
+import requests
 from bs4 import BeautifulSoup
+from phantom.action_result import ActionResult
+from phantom.base_connector import BaseConnector
+
+from mnemonic_consts import *
 
 
 class RetVal(tuple):
@@ -233,11 +240,13 @@ class MnemonicConnector(BaseConnector):
 
         for curr_item in data:
             try:
-                curr_item['lastSeenTimestampString'] = time.strftime('%Y-%m-%d %H:%M:%S %Z', time.localtime(curr_item['lastSeenTimestamp'] / 1000))
+                curr_item['lastSeenTimestampString'] = time.strftime('%Y-%m-%d %H:%M:%S %Z',
+                    time.localtime(curr_item['lastSeenTimestamp'] / 1000))
             except:
                 pass
             try:
-                curr_item['firstSeenTimestampString'] = time.strftime('%Y-%m-%d %H:%M:%S %Z', time.localtime(curr_item['firstSeenTimestamp'] / 1000))
+                curr_item['firstSeenTimestampString'] = time.strftime('%Y-%m-%d %H:%M:%S %Z',
+                    time.localtime(curr_item['firstSeenTimestamp'] / 1000))
             except:
                 pass
 
@@ -293,8 +302,9 @@ class MnemonicConnector(BaseConnector):
 
 if __name__ == '__main__':
 
-    import pudb
     import argparse
+
+    import pudb
 
     pudb.set_trace()
 
@@ -303,12 +313,14 @@ if __name__ == '__main__':
     argparser.add_argument('input_test_json', help='Input Test JSON file')
     argparser.add_argument('-u', '--username', help='username', required=False)
     argparser.add_argument('-p', '--password', help='password', required=False)
+    argparser.add_argument('-v', '--verify', action='store_true', help='verify', required=False, default=False)
 
     args = argparser.parse_args()
     session_id = None
 
     username = args.username
     password = args.password
+    verify = args.verify
 
     if username is not None and password is None:
 
@@ -319,7 +331,7 @@ if __name__ == '__main__':
     if username and password:
         try:
             print("Accessing the Login page")
-            r = requests.get("{}login".format(BaseConnector._get_phantom_base_url()), verify=False)
+            r = requests.get("{}login".format(BaseConnector._get_phantom_base_url()), verify=verify, timeout=DEFAULT_TIMEOUT)
             csrftoken = r.cookies['csrftoken']
 
             data = dict()
@@ -332,11 +344,12 @@ if __name__ == '__main__':
             headers['Referer'] = "{}login".format(BaseConnector._get_phantom_base_url())
 
             print("Logging into Platform to get the session id")
-            r2 = requests.post("{}login".format(BaseConnector._get_phantom_base_url()), verify=False, data=data, headers=headers)
+            r2 = requests.post("{}login".format(BaseConnector._get_phantom_base_url()), verify=verify, timeout=DEFAULT_TIMEOUT,
+                               data=data, headers=headers)
             session_id = r2.cookies['sessionid']
         except Exception as e:
             print("Unable to get session id from the platfrom. Error: " + str(e))
-            exit(1)
+            sys.exit(1)
 
     with open(args.input_test_json) as f:
         in_json = f.read()
@@ -352,4 +365,4 @@ if __name__ == '__main__':
         ret_val = connector._handle_action(json.dumps(in_json), None)
         print(json.dumps(json.loads(ret_val), indent=4))
 
-    exit(0)
+    sys.exit(0)
