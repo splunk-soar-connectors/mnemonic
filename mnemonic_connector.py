@@ -1,6 +1,6 @@
 # File: mnemonic_connector.py
 #
-# Copyright (c) 2017-2022 Splunk Inc.
+# Copyright (c) 2017-2023 Splunk Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -197,8 +197,10 @@ class MnemonicConnector(BaseConnector):
 
         # Add an action result object to self (BaseConnector) to represent the action for this param
         action_result = self.add_action_result(ActionResult(dict(param)))
+        self.save_progress(f"In action handler for {self.get_action_identifier()}")
 
         # Access action parameters passed in the 'param' dictionary
+        self.save_progress("Querying a domain")
 
         domain = param['domain']
 
