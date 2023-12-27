@@ -2,11 +2,11 @@
 # Mnemonic
 
 Publisher: Splunk  
-Connector Version: 2\.0\.6  
+Connector Version: 2.0.7  
 Product Vendor: Mnemonic  
 Product Name: Passive DNS  
-Product Version Supported (regex): "\.\*"  
-Minimum Product Version: 5\.1\.0  
+Product Version Supported (regex): ".\*"  
+Minimum Product Version: 5.1.0  
 
 This app integrates with the Mnemonic Passive DNS API to implement investigative actions
 
@@ -15,7 +15,7 @@ The below configuration variables are required for this Connector to operate.  T
 
 VARIABLE | REQUIRED | TYPE | DESCRIPTION
 -------- | -------- | ---- | -----------
-**domain** |  optional  | string | Domain to check connectivity \(Default\: phantom\.us\)
+**domain** |  optional  | string | Domain to check connectivity (Default: phantom.us)
 
 ### Supported Actions  
 [test connectivity](#action-test-connectivity) - Validate the asset configuration for connectivity using supplied configuration  
@@ -43,31 +43,31 @@ Read only: **True**
 PARAMETER | REQUIRED | DESCRIPTION | TYPE | CONTAINS
 --------- | -------- | ----------- | ---- | --------
 **domain** |  required  | Domain to lookup | string |  `domain`  `url` 
-**range** |  optional  | Range \(min\_offset\-max\_offset\), default is 0\-100 | string | 
+**range** |  optional  | Range (min_offset-max_offset), default is 0-100 | string | 
 
 #### Action Output
-DATA PATH | TYPE | CONTAINS
---------- | ---- | --------
-action\_result\.status | string | 
-action\_result\.parameter\.domain | string |  `domain`  `url` 
-action\_result\.parameter\.range | string | 
-action\_result\.data\.\*\.answer | string |  `ip` 
-action\_result\.data\.\*\.createdTimestamp | numeric | 
-action\_result\.data\.\*\.customer | string | 
-action\_result\.data\.\*\.firstSeenTimestamp | numeric | 
-action\_result\.data\.\*\.firstSeenTimestampString | string | 
-action\_result\.data\.\*\.lastSeenTimestamp | numeric | 
-action\_result\.data\.\*\.lastSeenTimestampString | string | 
-action\_result\.data\.\*\.lastUpdatedTimestamp | numeric | 
-action\_result\.data\.\*\.maxTtl | numeric | 
-action\_result\.data\.\*\.minTtl | numeric | 
-action\_result\.data\.\*\.query | string | 
-action\_result\.data\.\*\.rrclass | string | 
-action\_result\.data\.\*\.rrtype | string | 
-action\_result\.data\.\*\.times | numeric | 
-action\_result\.data\.\*\.tlp | string | 
-action\_result\.summary\.items\_returned | numeric | 
-action\_result\.summary\.total\_items | numeric | 
-action\_result\.message | string | 
-summary\.total\_objects | numeric | 
-summary\.total\_objects\_successful | numeric | 
+DATA PATH | TYPE | CONTAINS | EXAMPLE VALUES
+--------- | ---- | -------- | --------------
+action_result.status | string |  |   success  failed 
+action_result.parameter.domain | string |  `domain`  `url`  |   https://test.us  test.us 
+action_result.parameter.range | string |  |   1-1  0-17 
+action_result.data.\*.answer | string |  `ip`  |   52.91.186.198 
+action_result.data.\*.createdTimestamp | numeric |  |   0 
+action_result.data.\*.customer | string |  |  
+action_result.data.\*.firstSeenTimestamp | numeric |  |   1487193402522 
+action_result.data.\*.firstSeenTimestampString | string |  |   2017-02-15 13:16:42 PST 
+action_result.data.\*.lastSeenTimestamp | numeric |  |   1509969898297 
+action_result.data.\*.lastSeenTimestampString | string |  |   2017-11-06 04:04:58 PST 
+action_result.data.\*.lastUpdatedTimestamp | numeric |  |   0 
+action_result.data.\*.maxTtl | numeric |  |   600 
+action_result.data.\*.minTtl | numeric |  |   600 
+action_result.data.\*.query | string |  |   test.us 
+action_result.data.\*.rrclass | string |  |   in 
+action_result.data.\*.rrtype | string |  |   a 
+action_result.data.\*.times | numeric |  |   145 
+action_result.data.\*.tlp | string |  |   white 
+action_result.summary.items_returned | numeric |  |   3 
+action_result.summary.total_items | numeric |  |   3 
+action_result.message | string |  |   Items returned: 3, Total items: 3 
+summary.total_objects | numeric |  |   1 
+summary.total_objects_successful | numeric |  |   1 
