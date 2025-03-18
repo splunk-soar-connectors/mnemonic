@@ -1,6 +1,6 @@
 # File: mnemonic_consts.py
 #
-# Copyright (c) 2017-2023 Splunk Inc.
+# Copyright (c) 2017-2025 Splunk Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,7 +13,7 @@
 # either express or implied. See the License for the specific language governing permissions
 # and limitations under the License.
 MNEMONIC_BASE_URL = "https://api.mnemonic.no/pdns/v3"
-MNEMONIC_DEFAULT_RANGE = '0-100'
+MNEMONIC_DEFAULT_RANGE = "0-100"
 DEFAULT_TIMEOUT = 30
 
 MNEMONIC_SUCCESS_TEST_CONNECTIVITY = "Test Connectivity Passed"
