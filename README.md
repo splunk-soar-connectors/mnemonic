@@ -1,9 +1,9 @@
 # Mnemonic
 
-Publisher: Splunk \
-Connector Version: 2.0.8 \
-Product Vendor: Mnemonic \
-Product Name: Passive DNS \
+Publisher: Splunk <br>
+Connector Version: 2.0.8 <br>
+Product Vendor: Mnemonic <br>
+Product Name: Passive DNS <br>
 Minimum Product Version: 5.1.0
 
 This app integrates with the Mnemonic Passive DNS API to implement investigative actions
@@ -18,14 +18,14 @@ VARIABLE | REQUIRED | TYPE | DESCRIPTION
 
 ### Supported Actions
 
-[test connectivity](#action-test-connectivity) - Validate the asset configuration for connectivity using supplied configuration \
+[test connectivity](#action-test-connectivity) - Validate the asset configuration for connectivity using supplied configuration <br>
 [lookup domain](#action-lookup-domain) - Check for the presence of a domain in a threat intelligence feed
 
 ## action: 'test connectivity'
 
 Validate the asset configuration for connectivity using supplied configuration
 
-Type: **test** \
+Type: **test** <br>
 Read only: **True**
 
 #### Action Parameters
@@ -40,7 +40,7 @@ No Output
 
 Check for the presence of a domain in a threat intelligence feed
 
-Type: **investigate** \
+Type: **investigate** <br>
 Read only: **True**
 
 #### Action Parameters
