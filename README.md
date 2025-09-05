@@ -1,7 +1,7 @@
 # Mnemonic
 
 Publisher: Splunk <br>
-Connector Version: 2.0.8 <br>
+Connector Version: 2.0.9 <br>
 Product Vendor: Mnemonic <br>
 Product Name: Passive DNS <br>
 Minimum Product Version: 5.1.0
