@@ -1,6 +1,6 @@
 # File: mnemonic_connector.py
 #
-# Copyright (c) 2017-2025 Splunk Inc.
+# Copyright (c) 2017-2026 Splunk Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -149,7 +149,7 @@ class MnemonicConnector(BaseConnector):
         self.save_progress(f"Querying a domain to test connectivity to {self._base_url}/{self._domain} ")
 
         # make rest call
-        ret_val, response = self._make_rest_call(f"/{self._domain}", action_result, params={"limit": 1, "offset": 0})
+        ret_val, _response = self._make_rest_call(f"/{self._domain}", action_result, params={"limit": 1, "offset": 0})
 
         if phantom.is_fail(ret_val):
             # the call to the 3rd party device or service failed, action result should contain all the error details

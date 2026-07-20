@@ -11,7 +11,7 @@
 {% block widget_content %}
   <!-- Main Start Block -->
   <!--File: display_lookup_domain.html
-Copyright (c) 2017-2025 Splunk Inc.
+Copyright (c) 2017-2026 Splunk Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -93,7 +93,7 @@ and limitations under the License.
             </td>
             <td>
               <a href="javascript:;"
-                 onclick="context_menu(this, [{'contains': ['{{ result.param.domain_contains }}'], 'value': '{{ result.param.domain }}' }], 0, {{ container.id }}, null, false);">
+                 onclick="context_menu(this, [{'contains': ['{{ result.param.domain_contains|escapejs }}'], 'value': '{{ result.param.domain|escapejs }}' }], 0, {{ container.id }}, null, false);">
                 {{ result.param.domain }}
                 &nbsp;<span class="fa fa-caret-down" style="font-size: smaller;"></span>
               </a>
@@ -154,14 +154,14 @@ and limitations under the License.
               <tr>
                 <td class="widget-td">
                   <a href="javascript:;"
-                     onclick="context_menu(this, [{'contains': ['domain'], 'value': '{{ curr_data.query }}' }], 0, {{ container.id }}, null, false);">
+                     onclick="context_menu(this, [{'contains': ['domain'], 'value': '{{ curr_data.query|escapejs }}' }], 0, {{ container.id }}, null, false);">
                     {{ curr_data.query }}
                     &nbsp;<span class="fa fa-caret-down" style="font-size: smaller;"></span>
                   </a>
                 </td>
                 <td class="widget-td">
                   <a href="javascript:;"
-                     onclick="context_menu(this, [{'contains': ['{{ curr_data.answer_contains }}'], 'value': '{{ curr_data.answer }}' }], 0, {{ container.id }}, null, false);">
+                     onclick="context_menu(this, [{'contains': ['{{ curr_data.answer_contains|escapejs }}'], 'value': '{{ curr_data.answer|escapejs }}' }], 0, {{ container.id }}, null, false);">
                     {{ curr_data.answer }}
                     &nbsp;<span class="fa fa-caret-down" style="font-size: smaller;"></span>
                   </a>
